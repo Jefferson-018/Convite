@@ -6,11 +6,10 @@
     <title>Sistema de Dieta Personalizada</title>
     <!-- Inclui Tailwind CSS para estilização -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Biblioteca para Gerar PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-        /* Estilos do Modo Escuro */
+        
+        /* === ESTILOS GERAIS PARA DARK MODE === */
         .dark {
             background-color: #1a202c;
             color: #e2e8f0;
@@ -30,9 +29,50 @@
         .dark .shadow-2xl {
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
-        /* Correção para garantir fundo branco na impressão, essencial para o PDF */
-        #printable-area {
-            background-color: #ffffff !important;
+        
+        /* === ESTILOS PARA IMPRESSÃO (PDF) === */
+        @media print {
+            /* Esconde o formulário (coluna de input) */
+            #input-column { 
+                display: none !important; 
+            }
+            
+            /* Maximiza a área de resultados */
+            #results-column {
+                grid-column: span 3 / span 3 !important;
+            }
+
+            /* Garante fundo e texto claros para economia de tinta e legibilidade */
+            body, .dark { 
+                background-color: #fff !important; 
+                color: #000 !important; 
+            }
+            .dark .bg-white, .dark .bg-gray-800 { 
+                background-color: #fff !important; 
+                color: #000 !important; 
+                box-shadow: none !important;
+                border: 1px solid #ccc !important;
+            }
+            /* Garante que o texto seja sempre preto */
+            .text-gray-700, .dark .text-gray-700, .dark .text-gray-200 { 
+                color: #000 !important; 
+            }
+            /* Remove a cor de fundo das opções */
+            .bg-green-50, .dark .bg-green-900\/50 {
+                background-color: #f0f0f0 !important;
+            }
+            
+            /* Remove botões e cabeçalho na impressão */
+            header, .flex.justify-end, .flex.justify-between:has(button) { 
+                display: none !important; 
+            }
+            
+            /* Ajusta a margem do container principal */
+            .max-w-6xl {
+                max-width: 100% !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
         }
     </style>
 </head>
@@ -274,11 +314,12 @@
                     
                     const getRandomFood = (list, filterTags = []) => {
                         const filteredList = list.filter(f => 
-                            !usedFoodIdsInOption.has(f.id) && (filterTags.length === 0 || filterTags.some(tag => filterTags.includes(tag)))
+                            !usedFoodIdsInOption.has(f.id) && (filterTags.length === 0 || filterTags.some(tag => f.tags.includes(tag)))
                         );
                         
                         if (filteredList.length === 0) return null;
                         
+                        // Garante que haja variedade entre as 3 opções (i)
                         const randomIndex = Math.floor(Math.random() * filteredList.length);
                         const selectedFood = filteredList[randomIndex];
                         
@@ -465,49 +506,22 @@
                     <button class="py-3 px-6 border border-indigo-500 text-indigo-600 font-bold rounded-lg hover:bg-indigo-50 transition duration-150 dark:hover:bg-gray-700 dark:text-indigo-400">
                         Salvar Plano
                     </button>
-                    <button id="generate-pdf-btn" class="py-3 px-6 bg-indigo-600 text-white font-bold rounded-lg shadow-md hover:bg-indigo-700 transition duration-150">
-                        Gerar PDF
+                    <button id="print-plan-btn" class="py-3 px-6 bg-indigo-600 text-white font-bold rounded-lg shadow-md hover:bg-indigo-700 transition duration-150">
+                        Imprimir Plano (PDF)
                     </button>
                 </div>
             `;
             // Adiciona o listener para o botão de refresh
             document.getElementById('refresh-meals-btn').addEventListener('click', handleRefreshMeals);
-            // Adiciona o listener para o botão de PDF
-            document.getElementById('generate-pdf-btn').addEventListener('click', generatePdf);
+            // NOVO: Adiciona o listener para o botão de Impressão
+            document.getElementById('print-plan-btn').addEventListener('click', printPlan);
         }
 
         // --- LÓGICA DE CÁLCULO E AÇÃO ---
 
-        function generatePdf() {
-            try {
-                const element = document.getElementById('printable-area'); 
-                
-                // Configurações do PDF (Aumentando qualidade e escala para melhor captura)
-                const opt = {
-                    margin: 0.5,
-                    filename: 'Plano_Dieta_' + new Date().toISOString().slice(0,10) + '.pdf',
-                    image: { type: 'jpeg', quality: 1.0 },
-                    html2canvas: { 
-                        scale: 3, 
-                        logging: true, 
-                        dpi: 300, 
-                        letterRendering: true, 
-                        // Força o fundo branco na captura, essencial para o Dark Mode
-                        backgroundColor: '#ffffff' 
-                    }, 
-                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-                };
-
-                if(element) {
-                    // Usa a Promise moderna da biblioteca
-                    html2pdf().set(opt).from(element).save();
-                } else {
-                    alert("Ocorreu um erro ao gerar o PDF. Gere o plano alimentar primeiro.");
-                }
-            } catch (error) {
-                console.error("Erro no Gerador de PDF:", error);
-                alert("Ocorreu um erro ao gerar o PDF. Verifique se o plano foi gerado.");
-            }
+        function printPlan() {
+            // Usa a função nativa de impressão do navegador, que é a mais estável para PDF.
+            window.print();
         }
 
         function calculateDiet(event) {
