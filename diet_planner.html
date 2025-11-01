@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Dieta Personalizada</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 p-4 sm:p-8">
+
+    <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+        
+        <header class="p-6 bg-indigo-600 text-white flex justify-between items-center shadow-md">
+            <h1 class="text-2xl font-extrabold flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                Sistema de Dieta Personalizada
+            </h1>
+            <button class="p-2 rounded-full hover:bg-indigo-700 transition duration-150">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.82 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.82 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.82-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.82-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+            </button>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8 p-6 lg:p-10">
+
+            <div id="input-column" class="lg:col-span-1 p-6 bg-gray-100 rounded-xl shadow-inner h-fit sticky top-8">
+                <div class="flex items-center text-xl font-bold mb-4 mt-2 text-gray-700 border-b-2 border-gray-200 pb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                    1. Seus Dados e Objetivo
+                </div>
+                
+                <form id="diet-form" class="space-y-4">
+                    
+                    <input type="text" id="name" placeholder="Seu Nome (Opcional)" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition duration-150"/>
+
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <label for="weight" class="block text-sm font-medium text-gray-700 mb-1">Peso (kg)</label>
+                            <input type="number" id="weight" value="75" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition duration-150"/>
+                        </div>
+                        <div>
+                            <label for="height" class="block text-sm font-medium text-gray-700 mb-1">Altura (cm)</label>
+                            <input type="number" id="height" value="175" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition duration-150"/>
+                        </div>
+                        <div>
+                            <label for="age" class="block text-sm font-medium text-gray-700 mb-1">Idade</label>
+                            <input type="number" id="age" value="25" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 transition duration-150"/>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="sex" class="block text-sm font-medium text-gray-700 mb-1">Sexo</label>
+                        <select id="sex" class="w-full p-3 border border-gray-300 bg-white rounded-lg focus:ring-2 focus:ring-indigo-500 transition duration-150">
+                            <option value="male">Masculino</option>
+                            <option value="female">Feminino</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="goal" class="block text-sm font-medium text-gray-700 mb-1">Objetivo</label>
+                        <select id="goal" class="w-full p-3 border border-gray-300 bg-white rounded-lg focus:ring-2 focus:ring-indigo-500 transition duration-150">
+                            <option value="maintain">Manter Peso</option>
+                            <option value="mass">Ganhar Massa (+15%)</option>
+                            <option value="loss">Perder Peso (-15%)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="activityLevel" class="block text-sm font-medium text-gray-700 mb-1">Nível de Atividade</label>
+                        <select id="activityLevel" class="w-full p-3 border border-gray-300 bg-white rounded-lg focus:ring-2 focus:ring-indigo-500 transition duration-150">
+                            <option value="sedentary">Sedentário (Pouco/Nenhum exercício)</option>
+                            <option value="light">Leve (1-3 dias/semana)</option>
+                            <option value="moderate" selected>Moderado (3-5 dias/semana)</option>
+                            <option value="active">Ativo (6-7 dias/semana)</option>
+                            <option value="veryActive">Muito Ativo (Treinos intensos diários)</option>
+                        </select>
+                    </div>
+                        
+                    <div class="flex items-center text-xl font-bold mb-4 pt-4 text-gray-700 border-b-2 border-gray-200 pb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        2. Restrições e Preferências
+                    </div>
+                    <div id="preferences-container" class="space-y-2">
+                        </div>
+
+                    <button type="submit" id="generate-btn" class="w-full py-3 bg-indigo-600 text-white font-bold rounded-lg shadow-md hover:bg-indigo-700 transition duration-150 transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-indigo-500/50">
+                        Gerar Plano Alimentar
+                    </button>
+                </form>
+            </div>
+
+            <div id="results-column" class="lg:col-span-2">
+                <div id="initial-message" class="p-10 text-center bg-gray-50 rounded-xl shadow-lg border-2 border-dashed border-gray-300">
+                    <p class="text-xl font-semibold text-gray-500">
+                        Preencha seus dados e clique em "Gerar Plano Alimentar" para visualizar seu resumo calórico e sugestão de dieta.
+                    </p>
+                </div>
+
+                <div id="diet-results" class="space-y-10 hidden">
+                    </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // === BANCO DE DADOS E CONFIGURAÇÕES ===
+
+        const foodDatabase = [
+            // Ganhos de Massa
+            { id: 1, type: 'mass', name: "Peito de Frango (100g)", calories: 165, macros: { P: 31, C: 0, G: 3.6 }, tags: ['poultry'], substitutes: ["Atum em Água (100g)", "Ovos"] },
+            { id: 10, type: 'mass', name: "Carne Moída Magra (100g)", calories: 180, macros: { P: 26, C: 0, G: 8 }, tags: ['red_meat'], substitutes: ["Peito de Frango", "Lentilha (cozida)"] },
+            { id: 2, type: 'mass', name: "Arroz Integral (100g)", calories: 112, macros: { P: 2.6, C: 25.6, G: 0.9 }, tags: ['grain'], substitutes: ["Batata Doce (100g)", "Quinoa (100g)"] },
+            { id: 3, type: 'mass', name: "Ovos Cozidos (unidade)", calories: 78, macros: { P: 6, C: 0.6, G: 5 }, tags: ['egg'], substitutes: ["Queijo Cottage (50g)", "Whey Protein (30g)"] },
+            { id: 11, type: 'mass', name: "Leite Integral (200ml)", calories: 120, macros: { P: 6, C: 9, G: 6 }, tags: ['dairy', 'lactose'], substitutes: ["Leite de Amêndoas"] },
+            
+            // Perda de Peso
+            { id: 5, type: 'loss', name: "Filé de Tilápia Assada (100g)", calories: 128, macros: { P: 26, C: 0, G: 2 }, tags: ['fish'], substitutes: ["Salmão Grelhado (50g)", "Tofu Grelhado (100g)"] },
+            { id: 6, type: 'loss', name: "Salada de Folhas Verdes", calories: 20, macros: { P: 1, C: 3, G: 0 }, tags: ['vegetable'], substitutes: ["Brócolis Cozido"] },
+            { id: 7, type: 'loss', name: "Aveia (30g)", calories: 117, macros: { P: 5, C: 18, G: 2 }, tags: ['grain'], substitutes: ["Chia (15g)"] },
+            
+            // Manutenção/Geral
+            { id: 8, type: 'maintain', name: "Iogurte Natural (170g)", calories: 100, macros: { P: 8, C: 8, G: 4 }, tags: ['dairy', 'lactose'], substitutes: ["Iogurte de Soja"] },
+            { id: 9, type: 'maintain', name: "Frutas (100g)", calories: 60, macros: { P: 0.5, C: 15, G: 0.5 }, tags: ['fruit'], substitutes: ["Mix de Castanhas (15g)"] },
+            { id: 12, type: 'maintain', name: "Queijo Minas (50g)", calories: 80, macros: { P: 10, C: 1, G: 4 }, tags: ['dairy', 'lactose'], substitutes: ["Queijo Tofu"] },
+        ];
+
+        const preferenceOptions = [
+            { name: 'dairy_free', label: 'Sem Laticínios', tagsToExclude: ['dairy', 'lactose'] },
+            { name: 'no_red_meat', label: 'Sem Carne Vermelha', tagsToExclude: ['red_meat'] },
+            { name: 'no_poultry', label: 'Sem Aves', tagsToExclude: ['poultry'] },
+            { name: 'no_fish', label: 'Sem Peixe', tagsToExclude: ['fish'] },
+            { name: 'vegetarian', label: 'Vegetariano', tagsToExclude: ['poultry', 'red_meat', 'fish', 'egg'] },
+        ];
+
+        const MealSchedule = [
+            { name: "Café da Manhã", factor: 0.20 },
+            { name: "Lanche da Manhã", factor: 0.08 },
+            { name: "Almoço", factor: 0.25 },
+            { name: "Lanche da Tarde", factor: 0.08 },
+            { name: "Jantar", factor: 0.25 },
+            { name: "Ceia", factor: 0.14 },
+        ];
+
+        const activityFactors = {
+            sedentary: 1.2,
+            light: 1.375,
+            moderate: 1.55,
+            active: 1.725,
+            veryActive: 1.9,
+        };
+        
+        // === ELEMENTOS DO DOM ===
+        const dietForm = document.getElementById('diet-form');
+        const resultsColumn = document.getElementById('results-column');
+        const initialMessage = document.getElementById('initial-message');
+        const dietResultsContainer = document.getElementById('diet-results');
+        const preferencesContainer = document.getElementById('preferences-container');
+        
+        let currentDietData = null; // Armazena o último resultado de cálculo
+        let userPreferences = []; // Armazena as preferências selecionadas
+
+
+        // === FUNÇÕES DE RENDERIZAÇÃO E INICIALIZAÇÃO ===
+
+        function renderPreferences() {
+            preferencesContainer.innerHTML = preferenceOptions.map(option => `
+                <label for="${option.name}" class="flex items-center cursor-pointer p-2 bg-white rounded-lg shadow-sm hover:bg-gray-50 transition duration-150">
+                    <input type="checkbox" id="${option.name}" data-preference="${option.name}" class="h-5 w-5 text-red-600 border-gray-300 rounded focus:ring-red-500" ${userPreferences.includes(option.name) ? 'checked' : ''}>
+                    <span class="ml-3 text-sm font-medium text-gray-700">${option.label}</span>
+                </label>
+            `).join('');
+
+            preferencesContainer.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const prefName = e.target.dataset.preference;
+                    if (e.target.checked) {
+                        userPreferences.push(prefName);
+                    } else {
+                        userPreferences = userPreferences.filter(p => p !== prefName);
+                    }
+                });
+            });
+        }
+
+        function renderResults(result) {
+            // Esconde a mensagem inicial e mostra os resultados
+            initialMessage.classList.add('hidden');
+            dietResultsContainer.classList.remove('hidden');
+
+            const name = document.getElementById('name').value.trim() || 'Usuário';
+
+            dietResultsContainer.innerHTML = `
+                <div class="space-y-10">
+                    ${renderSectionTitle('green', 'user', `Plano Sugerido: ${name}`)}
+                    
+                    ${renderCalorieSummary(result)}
+                    
+                    ${renderSectionTitle('green', 'activity', "Distribuição de Macronutrientes")}
+                    ${renderMacroCards(result)}
+
+                    <div class="flex justify-between items-center">
+                        ${renderSectionTitle('indigo', 'clock', "Plano Detalhado de Refeições")}
+                        <button id="refresh-meals-btn" class="flex items-center text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition duration-150" title="Gerar novas sugestões de alimentos (mantendo os cálculos)">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                            Alternar Sugestões
+                        </button>
+                    </div>
+
+                    <div class="space-y-6">
+                        ${result.mealPlan.map((meal, index) => renderMealItem(meal, index % 2 === 0 ? 'indigo' : 'gray')).join('')}
+                    </div>
+
+                    <div class="flex justify-end space-x-4 pt-4">
+                        <button class="py-2 px-4 border border-indigo-500 text-indigo-600 font-bold rounded-lg hover:bg-indigo-50 transition duration-150">
+                            Salvar Plano
+                        </button>
+                        <button class="py-2 px-4 bg-indigo-600 text-white font-bold rounded-lg shadow-md hover:bg-indigo-700 transition duration-150">
+                            Gerar PDF (Opcional)
+                        </button>
+                    </div>
+                </div>
+            `;
+            // Adiciona o listener para o botão de refresh
+            document.getElementById('refresh-meals-btn').addEventListener('click', handleRefreshMeals);
+        }
+
+        // --- Componentes de HTML ---
+
+        function renderSectionTitle(color, iconName, title) {
+            // Aqui você renderizaria o ícone SVG correspondente ao iconName
+            // Por simplicidade, usamos um SVG genérico
+            return `
+                <div class="flex items-center text-xl font-bold mb-4 mt-8 text-gray-700 border-b-2 border-gray-100 pb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-3 text-${color}-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2-3-.895-3-2 1.343-2 3-2zM9 12h6m-6 0h.01M17 12a5 5 0 11-10 0 5 5 0 0110 0z" /></svg>
+                    ${title}
+                </div>
+            `;
+        }
+
+        function renderMacroCard(title, value, unit, color) {
+            return `
+                <div class="p-4 rounded-xl shadow-lg flex-1 min-w-[120px] bg-white border-b-4 border-${color}-500 transition duration-300 hover:shadow-xl">
+                    <h3 class="text-sm font-semibold text-gray-500 mb-1">${title}</h3>
+                    <p class="text-3xl font-bold text-${color}-600">${value}</p>
+                    <p class="text-xs text-gray-400 mt-0">${unit}</p>
+                </div>
+            `;
+        }
+        
+        function renderMacroCards(result) {
+            const macroData = [
+                { title: "Proteínas", value: result.proteinGrams, unit: "gramas", color: "blue" },
+                { title: "Carboidratos", value: result.carbGrams, unit: "gramas", color: "orange" },
+                { title: "Gorduras", value: result.fatGrams, unit: "gramas", color: "red" },
+            ];
+            
+            const macroCards = macroData.map(d => renderMacroCard(d.title, d.value, d.unit, d.color)).join('');
+            
+            const percentP = ((result.proteinGrams * 4) / result.finalCals * 100).toFixed(0);
+            const percentC = ((result.carbGrams * 4) / result.finalCals * 100).toFixed(0);
+            const percentG = ((result.fatGrams * 9) / result.finalCals * 100).toFixed(0);
+            
+            const percentages = `
+                <div class="text-center text-sm text-gray-500 flex-1 min-w-[120px] pt-4">
+                    <p>P: ${percentP}%</p>
+                    <p>C: ${percentC}%</p>
+                    <p>G: ${percentG}%</p>
+                </div>
+            `;
+
+            return `<div class="flex flex-wrap gap-4 justify-between">${macroCards}${percentages}</div>`;
+        }
+
+        function renderCalorieSummary(result) {
+            const goalText = result.goal === 'mass' ? 'Ajustado em +15% para Ganho de Massa.' : result.goal === 'loss' ? 'Ajustado em -15% para Perda de Peso.' : 'Manutenção de Peso (Ajuste Neutro).';
+            
+            return `
+                <div class="bg-green-50 p-6 rounded-xl shadow-lg border-l-8 border-green-400">
+                    <p class="text-xl font-semibold text-gray-700 mb-3">Sua Necessidade Calórica</p>
+                    <div class="flex justify-between items-center text-sm">
+                        <p class="text-gray-500">TDEE (Gasto Total): <span class="font-bold text-gray-800">${result.tdee} kcal</span></p>
+                        <p class="text-gray-500">BMR (Metabolismo Basal): <span class="font-bold text-gray-800">${result.bmr} kcal</span></p>
+                    </div>
+                    <p class="text-4xl font-extrabold text-green-700 mt-2 text-center">
+                        ${result.finalCals} <span class="text-2xl font-semibold">kcal/dia</span>
+                    </p>
+                    <p class="text-sm text-center text-gray-500 mt-1">${goalText}</p>
+                </div>
+            `;
+        }
+
+        function renderMealItem(meal, color) {
+            const foodList = meal.foods.map((item, index) => `
+                <li key="${index}" class="pl-3 border-l-4 border-dashed border-gray-200">
+                    <p class="text-base font-semibold text-gray-700">
+                        ${item.food} - <span class="font-bold text-lg text-green-600">${item.portion} ${item.unit}</span>
+                    </p>
+                    ${item.substitutes && item.substitutes.length > 0 ? `<p class="text-xs text-gray-400 mt-0">Substitutos: ${item.substitutes.join(', ')}</p>` : ''}
+                </li>
+            `).join('');
+
+            return `
+                <div class="p-4 rounded-xl bg-white border-2 border-${color}-100 shadow-md">
+                    <div class="flex items-center mb-3 pb-2 border-b border-gray-100 text-${color}-600">
+                        <div class="p-2 rounded-full bg-${color}-500 text-white mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <h4 class="text-xl font-bold">${meal.name} <span class="text-sm font-normal text-gray-500">(${meal.time} - Aprox. ${meal.requiredCals} kcal)</span></h4>
+                    </div>
+                    <ul class="space-y-3">${foodList}</ul>
+                </div>
+            `;
+        }
+
+        // === LÓGICA DE CÁLCULO E AÇÃO ===
+
+        function filterFoods(goal, excludedTags) {
+            return foodDatabase.filter(f => {
+                const matchesGoal = f.type === goal || f.type === 'maintain';
+                const isExcluded = f.tags && f.tags.some(tag => excludedTags.includes(tag));
+                return matchesGoal && !isExcluded;
+            });
+        }
+
+        function generateMealPlan(finalCals, goal, excludedTags) {
+            const availableFoods = filterFoods(goal, excludedTags);
+            const plan = [];
+
+            MealSchedule.forEach(meal => {
+                const requiredCals = Math.round(finalCals * meal.factor);
+
+                let proteinFoods = availableFoods.filter(f => f.macros.P > 10);
+                let carbFoods = availableFoods.filter(f => f.macros.C > 10);
+                let fatGeneralFoods = availableFoods.filter(f => f.macros.P < 10 && f.macros.C < 10 && f.calories > 0);
+                
+                if (proteinFoods.length === 0) proteinFoods = availableFoods.filter(f => f.macros.P > 5);
+                if (carbFoods.length === 0) carbFoods = availableFoods.filter(f => f.macros.C > 5);
+
+                const getRandomFood = (list) => list[Math.floor(Math.random() * list.length)];
+
+                const selectedProtein = getRandomFood(proteinFoods);
+                const selectedCarb = getRandomFood(carbFoods);
+                const selectedFatGeneral = getRandomFood(fatGeneralFoods);
+                
+                const mealFoods = [];
+
+                if (selectedProtein && selectedProtein.calories > 0) {
+                    const calsForProtein = requiredCals * 0.40;
+                    const portion = calsForProtein / selectedProtein.calories;
+                    if (portion >= 0.5) mealFoods.push({ food: selectedProtein.name, portion: Math.round(portion * 100), unit: 'g/unidade', substitutes: selectedProtein.substitutes });
+                }
+
+                if (selectedCarb && selectedCarb.calories > 0) {
+                    const calsForCarb = requiredCals * 0.35;
+                    const portion = calsForCarb / selectedCarb.calories;
+                    if (portion >= 0.5) mealFoods.push({ food: selectedCarb.name, portion: Math.round(portion * 100), unit: 'g/unidade', substitutes: selectedCarb.substitutes });
+                }
+
+                if (selectedFatGeneral) {
+                    mealFoods.push({ food: selectedFatGeneral.name, portion: 100, unit: 'g/unidade', substitutes: selectedFatGeneral.substitutes });
+                }
+
+                if (mealFoods.length === 0) {
+                    mealFoods.push({ food: "Nenhuma sugestão compatível. Verifique suas restrições.", portion: 0, unit: '', substitutes: [] });
+                }
+                
+                plan.push({ ...meal, foods: mealFoods, requiredCals });
+            });
+
+            return plan;
+        }
+
+        function calculateDiet(event) {
+            event.preventDefault();
+
+            const age = parseInt(document.getElementById('age').value);
+            const height = parseInt(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const sex = document.getElementById('sex').value;
+            const goal = document.getElementById('goal').value;
+            const activityLevel = document.getElementById('activityLevel').value;
+
+            if (isNaN(age) || isNaN(height) || isNaN(weight) || weight <= 0) {
+                alert("Por favor, preencha todos os dados básicos corretamente.");
+                return;
+            }
+
+            const factor = activityFactors[activityLevel] || 1.55;
+            let bmr;
+
+            // Fórmula de Mifflin-St Jeor
+            if (sex === 'male') {
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+            } else {
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+            }
+
+            let tdee = bmr * factor;
+            let finalCals = tdee;
+            if (goal === 'mass') {
+                finalCals *= 1.15;
+            } else if (goal === 'loss') {
+                finalCals *= 0.85;
+            }
+
+            // Distribuição de Macros (reaproveitando a lógica anterior)
+            let proteinPct = goal === 'mass' ? 0.35 : goal === 'loss' ? 0.30 : 0.25;
+            let carbPct = goal === 'mass' ? 0.45 : goal === 'loss' ? 0.40 : 0.50;
+            let fatPct = 1 - proteinPct - carbPct;
+
+            const proteinGrams = Math.round((finalCals * proteinPct) / 4);
+            const carbGrams = Math.round((finalCals * carbPct) / 4);
+            const fatGrams = Math.round((finalCals * fatPct) / 9);
+            
+            const excludedTags = userPreferences.flatMap(prefName => 
+                preferenceOptions.find(opt => opt.name === prefName)?.tagsToExclude || []
+            );
+
+            const mealPlan = generateMealPlan(finalCals, goal, excludedTags);
+
+            currentDietData = {
+                tdee: Math.round(tdee),
+                finalCals: Math.round(finalCals),
+                proteinGrams,
+                carbGrams,
+                fatGrams,
+                goal,
+                bmr: Math.round(bmr),
+                mealPlan,
+            };
+            
+            renderResults(currentDietData);
+        }
+
+        function handleRefreshMeals() {
+            if (!currentDietData) return;
+
+            const goal = document.getElementById('goal').value;
+            const finalCals = currentDietData.finalCals;
+            
+            const excludedTags = userPreferences.flatMap(prefName => 
+                preferenceOptions.find(opt => opt.name === prefName)?.tagsToExclude || []
+            );
+
+            const newMealPlan = generateMealPlan(finalCals, goal, excludedTags);
+            currentDietData.mealPlan = newMealPlan;
+            
+            renderResults(currentDietData);
+        }
+
+        // === INICIALIZAÇÃO ===
+
+        // Garante que o Tailwind funcione para as cores dinâmicas
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'blue': { '600': '#2563EB' },
+                        'orange': { '600': '#EA580C' },
+                        'red': { '600': '#DC2626' },
+                        'green': { '600': '#059669', '50': '#D1FAE5', '400': '#4ADE80' },
+                        'indigo': { '600': '#4F46E5', '500': '#6366F1', '50': '#EEF2FF', '200': '#C7D2FE' }
+                    }
+                }
+            }
+        };
+
+        // Event Listeners
+        dietForm.addEventListener('submit', calculateDiet);
+        
+        // Renderiza as preferências ao carregar a página
+        window.onload = renderPreferences;
+    </script>
+</body>
+</html>
